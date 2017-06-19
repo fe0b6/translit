@@ -1,11 +1,13 @@
 package translit
 
 import (
+	"regexp"
 	"strings"
 )
 
 var (
 	table map[string]string
+	enNum *regexp.Regexp
 )
 
 func init() {
@@ -43,19 +45,22 @@ func init() {
 		"Э": "E", "э": "e",
 		"Ю": "Iu", "ю": "iu",
 		"Я": "Ia", "я": "ia",
-		" ": "_", "1": "1",
-		"2": "2", "3": "3",
-		"4": "4", "5": "5",
-		"6": "6", "7": "7",
-		"8": "8", "9": "9",
-		"0": "0",
+		" ": "_",
 	}
+
+	enNum = regexp.MustCompile("[a-zA-Z0-9]")
 }
 
 func Transform(str string) string {
-	arr := []string{}
-	for _, v := range strings.Split(strings.TrimSpace(str), "") {
-		arr = append(arr, table[v])
+	sym := strings.Split(strings.TrimSpace(str), "")
+	arr := make([]string, len(sym))
+
+	for i, v := range sym {
+		if enNum.MatchString(v) {
+			arr[i] = v
+		} else {
+			arr[i] = table[v]
+		}
 	}
 
 	return strings.ToLower(strings.Join(arr, ""))
