@@ -43,13 +43,18 @@ func init() {
 		"Э": "E", "э": "e",
 		"Ю": "Iu", "ю": "iu",
 		"Я": "Ia", "я": "ia",
-		" ": "_",
+		" ": "_", "1": "1",
+		"2": "2", "3": "3",
+		"4": "4", "5": "5",
+		"6": "6", "7": "7",
+		"8": "8", "9": "9",
+		"0": "0",
 	}
 }
 
 func Transform(str string) string {
 	arr := []string{}
-	for _, v := range strings.Split(str, "") {
+	for _, v := range strings.Split(strings.TrimSpace(str), "") {
 		arr = append(arr, table[v])
 	}
 
